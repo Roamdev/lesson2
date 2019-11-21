@@ -13,7 +13,7 @@ class App extends PureComponent {
     post: [
       {
         id: 0,
-        value: 'Сходить в хуй срочно'
+        value: ''
       }
     ],
     newsInput: ''
@@ -44,11 +44,13 @@ class App extends PureComponent {
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={newsInput}
+          className='new-post'
         />
-        {post.map(post => (
+        {post.map(newPost => (
           <NewsPost
-            id={post.id}
-            text={post.value}
+            key={newPost.id}
+            id={newPost.id}
+            text={newPost.value}
           />
         ))}
       </div>
