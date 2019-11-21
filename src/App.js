@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { PureComponent } from 'react';
 import './App.css';
+import NewsPost from './NewsPost';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+let id = 0;
+
+function getCommentId() {
+  id += 1;
+  return id;
+}
+class App extends PureComponent {
+  state = {
+    post: [
+      {
+        id: 0,
+        value: 'Сходить в хуй срочно'
+      }
+    ],
+    newsInput: ''
+  }
+  handleChange = (e) => {
+    const value = e.target.value;
+    this.setState({newsInput: value});
+  }
+
+  handleKeyDown = event => {
+    if (event.keyCode === 13) {
+      const {newsInput, post} = this.state;
+      const newPost = {id : getCommentId(), value: newsInput};
+
+      this.setState({newsInput: '', post: [...post, newPost]});
+      console.log(newsInput);
+    }
+  }
+
+
+
+  render () {
+    const {newsInput, post} = this.state;
+    return (
+      <div>
+        <div className="App"></div>
+        <input
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+          value={newsInput}
+        />
+        {post.map(post => (
+          <NewsPost
+            id={post.id}
+            text={post.value}
+          />
+        ))}
+      </div>
+    );
+  }
 }
 
+
+
+
+// ReactDOM.render(<App />, document.getElementById('root'));
 export default App;
