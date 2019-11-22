@@ -1,11 +1,11 @@
 import React, {PureComponent} from 'react';
 
 class NewComment extends PureComponent {
-  // const {comment} = this.props;
+  const {commentText} = this.props;
   render() {
     return (
       <div>
-        {/* <p>{comment}</p> */}
+        <p id={commentId}>{commentText}</p>
       </div>
     )
   }

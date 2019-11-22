@@ -10,9 +10,7 @@ function getCommentId() {
 
 class NewsPost extends PureComponent {
   state = {
-    comment: [{
-      value: ''
-    }],
+    comment: '',
     commentId: 0
   }
 
@@ -24,7 +22,7 @@ class NewsPost extends PureComponent {
   handleKeyDown = event => {
     if (event.keyCode === 13) {
       const {comment} = this.state;
-      const newComment = {id : getCommentId(), comment: comment};
+      const newComment = {commentId : getCommentId(), comment: comment};
 
       this.setState({comment: '', comment: [...comment, newComment]});
       console.log(comment);
@@ -36,7 +34,7 @@ class NewsPost extends PureComponent {
   //   onChange(id);
   // };
   render() {
-    const {text, id} = this.props;
+    const {text, id, comment, commentId} = this.props;
     return (
       <div className='containerPost'>
         <p 
@@ -50,10 +48,12 @@ class NewsPost extends PureComponent {
           onKeyDown={this.handleKeyDown}
         >
         </input>
-
-        <NewComment 
-          // comment={comment}
-        />
+        {}
+          <NewComment 
+            kei={commentId}
+            Id={commentId}
+            commentText={comment}
+          />
       </div>
     );
   }
