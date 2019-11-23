@@ -1,59 +1,55 @@
 import React, {PureComponent} from 'react';
 import NewComment from './NewComment';
 
-let commentId = 0;
-
-function getCommentId() {
-  commentId += 1;
-  return commentId;
-}
-
 class NewsPost extends PureComponent {
   state = {
-    comment: '',
-    commentId: 0
+    input: ''
   }
-
-  handleChange = (e) => {
-    const value = e.target.value;
-    this.setState({comment: value});
-  }
-
   handleKeyDown = event => {
-    if (event.keyCode === 13) {
-      const {comment} = this.state;
-      const newComment = {commentId : getCommentId(), comment: comment};
+    const {handleComment} = this.props;
 
-      this.setState({comment: '', comment: [...comment, newComment]});
-      console.log(comment);
+    if (event.keyCode === 13) {
+      // const {inputValue, comment} = this.state;
+      console.log(this.props)
+      handleComment(this.props.id, this.state.input)
+
+      // const newComment = {id : getCommentId(), value: inputValue};
+
+      this.setState({input: ''});
     }
   }
 
-  // handleChange = () => {
-  //   const {id, onChange} = this.props;
-  //   onChange(id);
-  // };
   render() {
-    const {text, id, comment, commentId} = this.props;
+    const {text, id, comments} = this.props;
+    console.log('a',this.props)
+
     return (
-      <div className='containerPost'>
-        <p 
+      <div className='containerPost' style={{ border: '1px solid black'}}>
+        <p>
+        <strong
           className='post-text'
           id={id}
         >{text}
+        </strong>
         </p>
+        <button onClick={this.props.handlerEditPost}>edit</button>
+        new comment
         <input
           className='inputPost'
-          onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
-        >
-        </input>
-        {}
-          <NewComment 
-            kei={commentId}
-            Id={commentId}
-            commentText={comment}
+          onChange={(e) => {
+            this.setState({ input: e.target.value })
+          }}
+          value={this.state.input}
+        />
+        
+        {comments.map(({ id, value }) =>(
+          <NewComment
+            key={id}
+            Id={id}
+            commentText={value}
           />
+        ))}
       </div>
     );
   }
