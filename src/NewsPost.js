@@ -5,37 +5,40 @@ class NewsPost extends PureComponent {
   state = {
     input: ''
   }
+
+  handleDelete = () => {
+    const {id, onDelete} = this.props;
+    onDelete(id);
+    console.log(1);
+  }
+
   handleKeyDown = event => {
     const {handleComment} = this.props;
 
     if (event.keyCode === 13) {
-      // const {inputValue, comment} = this.state;
-      console.log(this.props)
       handleComment(this.props.id, this.state.input)
-
-      // const newComment = {id : getCommentId(), value: inputValue};
-
       this.setState({input: ''});
     }
   }
 
   render() {
     const {text, id, comments} = this.props;
-    console.log('a',this.props)
 
     return (
-      <div className='containerPost' style={{ border: '1px solid black'}}>
-        <p>
-        <strong
+      <div className='post-container'>
+        <p
           className='post-text'
           id={id}
         >{text}
-        </strong>
         </p>
-        <button onClick={this.props.handlerEditPost}>edit</button>
-        new comment
+        <div onClick={this.props.handlerEditPost} className='post-edit'></div>
+        <div
+          className='post-delete'
+          onClick={this.handleDelete}
+        ></div>
         <input
-          className='inputPost'
+          className='post-input'
+          placeholder='Написать комментарий...'
           onKeyDown={this.handleKeyDown}
           onChange={(e) => {
             this.setState({ input: e.target.value })

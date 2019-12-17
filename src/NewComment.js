@@ -4,10 +4,9 @@ class NewComment extends PureComponent {
   render() {
     const {commentText, id} = this.props;
     return (
-      <div>
-      <hr />
-        <p id={id}>{commentText}</p>
-        
+      <div className='comment-container'>
+        <p id={id} className='comment-text'>{commentText}</p>
+        <div className='upper-line'/>
       </div>
     )
   }
